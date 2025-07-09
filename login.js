@@ -8,12 +8,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = document.getElementById("email").value.trim();
     const password = document.getElementById("password").value;
 
-    // Simple hardcoded login for now
-    if (email === "test@user.com" && password === "123456") {
-      localStorage.setItem("user", email);
-      window.location.href = "career.html";
+    // ✅ ALLOW ALL EMAILS AND PASSWORDS (INSECURE MODE)
+    if (email && password) {
+      localStorage.setItem("user", email); // Store the email (or dummy session)
+      window.location.href = "career.html"; // Redirect to career page
     } else {
-      errorMsg.textContent = "❌ Invalid credentials. Try test@user.com / 123456";
+      errorMsg.textContent = "❌ Please fill both fields.";
     }
   });
 });
