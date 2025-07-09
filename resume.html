@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Resume Builder</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // now JS is safe to run
+  });
+</script>
+
+<body>
+  <nav>
+    <a href="login.html">Login</a>
+    <a href="career.html">Career</a>
+    <a href="resume.html">Resume</a>
+  </nav>
+  <div class="main-container">
+    <h2>Resume Recommendations</h2>
+    <form id="resumeForm">
+      <label>Your Name:</label>
+      <input type="text" id="name" required />
+
+      <label>Education:</label>
+      <select id="education">
+        <option value="BCA">BCA</option>
+        <option value="B.Tech">B.Tech</option>
+        <option value="Arts">Arts</option>
+      </select>
+
+      <label>Skills:</label>
+      <textarea id="skills" required></textarea>
+
+      <button type="submit">Get Suggestions</button>
+    </form>
+    <div id="suggestions"></div>
+  </div>
+  <script src="resume.js"></script>
+</body>
+</html>

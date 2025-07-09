@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Recommendation</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // now JS is safe to run
+  });
+</script>
+
+<body>
+  <nav>
+    <a href="login.html">Login</a>
+    <a href="career.html">Career</a>
+    <a href="resume.html">Resume</a>
+  </nav>
+  <div class="main-container">
+    <h2>Welcome, <span id="user"></span></h2>
+    <form id="careerForm">
+      <label>Education:</label>
+      <select id="education">
+        <option value="BCA">BCA</option>
+        <option value="B.Tech">B.Tech</option>
+        <option value="Arts">Arts</option>
+      </select>
+
+      <label>Skills:</label>
+      <label><input type="checkbox" value="Coding"> Coding</label>
+      <label><input type="checkbox" value="Design"> Design</label>
+      <label><input type="checkbox" value="Analytics"> Analytics</label>
+
+      <label>Interests:</label>
+      <textarea id="interests" placeholder="e.g. designing, coding, data analysis..."></textarea>
+
+      <button type="submit">Recommend Career</button>
+    </form>
+    <div id="recommendation"></div>
+  </div>
+
+  <script src="career.js"></script>
+</body>
+</html>

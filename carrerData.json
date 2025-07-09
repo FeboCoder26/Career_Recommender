@@ -1,0 +1,42 @@
+{
+  "software_developer": {
+    "title": "Software Developer",
+    "skills": ["coding", "logic"],
+    "education": ["bca", "btech"],
+    "keywords": ["problem", "logic"],
+    "resources": [
+      "https://roadmap.sh",
+      "https://freecodecamp.org"
+    ]
+  },
+  "data_analyst": {
+    "title": "Data Analyst",
+    "skills": ["analytics", "coding"],
+    "education": ["bca", "btech"],
+    "keywords": ["data", "pattern"],
+    "resources": [
+      "https://kaggle.com",
+      "https://coursera.org/specializations/data-analytics"
+    ]
+  },
+  "ui_ux_designer": {
+    "title": "UI/UX Designer",
+    "skills": ["design"],
+    "education": ["bca", "arts"],
+    "keywords": ["design", "interface", "user"],
+    "resources": [
+      "https://uxplanet.org",
+      "https://designcourse.com"
+    ]
+  },
+  "digital_marketer": {
+    "title": "Digital Marketer",
+    "skills": ["communication"],
+    "education": ["arts", "bca"],
+    "keywords": ["marketing", "social", "content"],
+    "resources": [
+      "https://hubspot.com/academy",
+      "https://moz.com"
+    ]
+  }
+}

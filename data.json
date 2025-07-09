@@ -1,0 +1,28 @@
+{
+  "careers": [
+    {
+      "title": "Software Developer",
+      "skills": ["Coding", "Problem Solving"],
+      "resources": [
+        "https://www.geeksforgeeks.org",
+        "https://developer.mozilla.org"
+      ]
+    },
+    {
+      "title": "Data Analyst",
+      "skills": ["Analytics", "Excel", "Python"],
+      "resources": [
+        "https://www.kaggle.com",
+        "https://www.coursera.org"
+      ]
+    },
+    {
+      "title": "UI/UX Designer",
+      "skills": ["Design", "Creativity"],
+      "resources": [
+        "https://www.behance.net",
+        "https://www.uxtools.co"
+      ]
+    }
+  ]
+}
