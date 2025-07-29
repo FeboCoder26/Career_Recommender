@@ -1,23 +1,103 @@
-document.getElementById("user").textContent = localStorage.getItem("userName") || "Guest";
+// career.js
+document.addEventListener("DOMContentLoaded", () => {
+  const skillsMap = {
+    science: ["Python", "Data Analysis", "Mathematics", "Problem Solving"],
+    commerce: ["Accounting", "Financial Analysis", "Excel", "Taxation"],
+    marketing: ["SEO", "Social-Media", "Copy-writing", "Digital Ads"],
+    humanities: ["Writing", "Public Speaking", "Research", "Critical Thinking"],
+    arts: ["Sketching", "Illustration", "Photography", "Video Editing"],
+    vocational: ["Electrical Repair", "Carpentry", "Plumbing", "Automotive"],
+    bca: ["HTML", "CSS", "JavaScript", "Database Basics"],
+    btech: ["C/C++", "Java", "DSA", "Cloud Fundamentals"]
+  };
 
-document.getElementById("careerForm").addEventListener("submit", function (e) {
-  e.preventDefault();
+  const eduSelect = document.getElementById("education");
+  const skillsBox = document.getElementById("skillsBox");
 
-  const education = document.getElementById("education").value;
-  const interests = document.getElementById("interests").value.toLowerCase();
-  const skills = [...document.querySelectorAll('input[type="checkbox"]:checked')].map(s => s.value);
+  // Populate skills dynamically when stream is selected
+  eduSelect.addEventListener("change", () => {
+    const stream = eduSelect.value;
+    skillsBox.innerHTML = "";
 
-  let recommendation = "<h3>Career Suggestion</h3>";
+    if (skillsMap[stream]) {
+      skillsMap[stream].forEach(skill => {
+        const id = `skill-${skill.replace(/\s+/g, "-")}`;
+        skillsBox.insertAdjacentHTML(
+          "beforeend",
+          `<label for="${id}">
+            <input type="checkbox" id="${id}" value="${skill}"> ${skill}
+          </label><br>`
+        );
+      });
+    }
+  });
 
-  if (skills.includes("Coding")) {
-    recommendation += "<p><strong>Software Developer</strong> - Ideal for coders.</p>";
-  } else if (skills.includes("Analytics")) {
-    recommendation += "<p><strong>Data Analyst</strong> - Great for data lovers.</p>";
-  } else if (skills.includes("Design")) {
-    recommendation += "<p><strong>UI/UX Designer</strong> - Perfect for creatives.</p>";
-  } else {
-    recommendation += "<p><strong>Try exploring new certifications.</strong></p>";
+  // Handle form submission
+  document.getElementById("careerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim() || "Guest";
+    document.getElementById("user").innerText = name;
+
+    const education = eduSelect.value;
+    const interests = document.getElementById("interests").value.toLowerCase();
+    const selectedSkills = [...document.querySelectorAll("#skillsBox input:checked")]
+      .map(cb => cb.value);
+
+    if (!education || selectedSkills.length === 0) {
+      document.getElementById("results").innerHTML = `
+        <p>Please select a stream and at least one skill.</p>`;
+      document.getElementById("results").style.display = "block";
+      return;
+    }
+
+    // Load the JSON file
+    const careers = await fetch("careerData.json").then(res => res.json());
+
+    const matched = Object.values(careers)
+      .map(career => {
+        const skillMatch = career.skills.filter(skill => selectedSkills.includes(skill));
+        const eduMatch = career.education.includes(education);
+        const interestMatch = career.keywords.some(kw => interests.includes(kw));
+        const score = skillMatch.length * 40 + (eduMatch ? 30 : 0) + (interestMatch ? 30 : 0);
+        return { ...career, score };
+      })
+      .filter(c => c.score > 0)
+      .sort((a, b) => b.score - a.score);
+
+    showResults(matched, name);
+  });
+
+  function showResults(list, userName) {
+    const resultsBox = document.getElementById("results");
+    resultsBox.style.display = "block";
+
+    if (list.length === 0) {
+      resultsBox.innerHTML = `<h3>No suitable match found</h3>
+        <p>Try selecting more skills or interests, or explore certifications in new areas.</p>`;
+      return;
+    }
+
+    let html = `<h3>Hi ${userName}! Here are your top career recommendations:</h3>
+      <table border="1" style="width: 100%; border-collapse: collapse;">
+        <thead>
+          <tr>
+            <th>Career Path</th>
+            <th>Key Skills</th>
+            <th>Accuracy (%)</th>
+          </tr>
+        </thead><tbody>`;
+
+    list.slice(0, 5).forEach(career => {
+      html += `
+        <tr>
+          <td>${career.title}</td>
+          <td>${career.skills.join(", ")}</td>
+          <td style="text-align:center">${Math.min(100, career.score)}%</td>
+        </tr>`;
+    });
+
+    html += `</tbody></table>`;
+    resultsBox.innerHTML = html;
   }
-
-  document.getElementById("recommendation").innerHTML = recommendation;
 });
