@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
       /* Gather user input */
       const name       = document.getElementById("name").value.trim() || "Candidate";
       const education  = eduSelect.value;
-      const interests  = document.getElementById("interests").value.toLowerCase();
+     const interests = document.getElementById("interests").value.toLowerCase();
       const skills     = [...document.querySelectorAll("#skillsBox input:checked")]
                          .map(cb => cb.value);
 
@@ -60,7 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
         .map(c => {
           const hitSkills = c.skills.filter(s => skills.includes(s));
           const hitEdu    = c.education.includes(education);
-          const hitKw     = c.keywords.some(kw => interests.includes(kw));
+          const hitKw = c.keywords.some(kw => interests.includes(kw.toLowerCase()));
+
           const score     = (hitSkills.length * 40) +
                             (hitEdu ? 30 : 0) +
                             (hitKw  ? 30 : 0);
