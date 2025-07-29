@@ -144,6 +144,34 @@ input[type="checkbox"] {
 .skills-group {
   margin-top: 0.5rem;
 }
+#skillsSection {
+  margin-top: 20px;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.skills-grid label {
+  background-color: #f4f4f4;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: block;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  transition: background-color 0.2s ease;
+}
+
+.skills-grid input[type="checkbox"] {
+  margin-right: 6px;
+}
+
+.skills-grid label:hover {
+  background-color: #e0f7fa;
+}
 
 button {
   margin-top: 1.5rem;
