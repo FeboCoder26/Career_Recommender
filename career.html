@@ -20,24 +20,45 @@
   </nav>
   <div class="main-container">
     <h2>Welcome, <span id="user"></span></h2>
-    <form id="careerForm">
-      <label>Education:</label>
-      <select id="education">
-        <option value="BCA">BCA</option>
-        <option value="B.Tech">B.Tech</option>
-        <option value="Arts">Arts</option>
-      </select>
+    <form id="careerForm" autocomplete="off">
+  <!-- ── Name ─────────────────────────────────────────── -->
+  <label for="name">Your name</label>
+  <input type="text" id="name" placeholder="Jane Doe" required />
 
-      <label>Skills:</label>
-      <label><input type="checkbox" value="Coding"> Coding</label>
-      <label><input type="checkbox" value="Design"> Design</label>
-      <label><input type="checkbox" value="Analytics"> Analytics</label>
+  <!-- ── Stream / Education ───────────────────────────── -->
+  <label for="education">Choose your stream / major</label>
+  <select id="education" required>
+    <option value="">-- Select --</option>
+    <option value="science">Science (PCM / PCB)</option>
+    <option value="commerce">Commerce</option>
+    <option value="marketing">Marketing / Business</option>
+    <option value="humanities">Humanities / Social Sciences</option>
+    <option value="arts">Fine‑Arts & Design</option>
+    <option value="vocational">Vocational / Skill‑based</option>
+    <!-- existing degrees you already had -->
+    <option value="bca">BCA</option>
+    <option value="btech">B.Tech</option>
+  </select>
 
-      <label>Interests:</label>
-      <textarea id="interests" placeholder="e.g. designing, coding, data analysis..."></textarea>
+  <!-- ── Interests ────────────────────────────────────── -->
+  <label for="interests">Your interests (comma‑separated keywords)</label>
+  <input type="text" id="interests" placeholder="coding, design, finance" />
 
-      <button type="submit">Recommend Career</button>
-    </form>
+  <!-- ── Skills (auto‑fills after a stream is chosen) ─── -->
+  <fieldset>
+    <legend>Select relevant skills</legend>
+    <div id="skillsBox" class="skills-container">
+      <!-- check‑boxes appear here by JS -->
+    </div>
+  </fieldset>
+
+  <!-- Submit button -->
+  <button type="submit">Recommend Career</button>
+</form>
+
+<!-- Results -->
+<div id="results" style="display:none"></div>
+
     <div id="recommendation"></div>
   </div>
 
