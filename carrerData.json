@@ -1,62 +1,32 @@
 {
   "career1": {
-    "title": "Chartered Accountant",
-    "skills": ["Accounting", "Financial Analysis", "Excel"],
-    "education": ["commerce"],
-    "keywords": ["finance", "tax", "accounting"]
+    "title": "Software Developer",
+    "skills": ["Java", "C/C++", "Problem Solving", "DSA"],
+    "education": ["btech", "bca", "science"],
+    "keywords": ["coding", "technology", "programming"]
   },
   "career2": {
-    "title": "Digital Marketing Specialist",
-    "skills": ["SEO", "Social-Media", "Copy-writing"],
-    "education": ["marketing", "commerce"],
-    "keywords": ["ads", "promotion", "brand"]
+    "title": "Financial Analyst",
+    "skills": ["Accounting", "Excel", "Financial Analysis", "Taxation"],
+    "education": ["commerce"],
+    "keywords": ["finance", "money", "analysis"]
   },
   "career3": {
-    "title": "Graphic Designer",
-    "skills": ["Illustration", "Sketching", "Photoshop"],
-    "education": ["arts"],
-    "keywords": ["design", "creativity", "branding"]
+    "title": "Digital Marketer",
+    "skills": ["SEO", "Social Media", "Digital Ads", "Copywriting"],
+    "education": ["marketing", "commerce"],
+    "keywords": ["marketing", "branding", "ads"]
   },
   "career4": {
-    "title": "Public Policy Analyst",
-    "skills": ["Research", "Critical Thinking", "Writing"],
-    "education": ["humanities"],
-    "keywords": ["government", "policy", "law"]
-  },
-  "career5": {
     "title": "Journalist",
     "skills": ["Writing", "Public Speaking", "Research"],
-    "education": ["humanities"],
-    "keywords": ["media", "news", "interview"]
+    "education": ["humanities", "arts"],
+    "keywords": ["news", "media", "communication"]
   },
-  "career6": {
-    "title": "Software Developer",
-    "skills": ["JavaScript", "Java", "Problem Solving"],
-    "education": ["bca", "btech", "science"],
-    "keywords": ["programming", "coding", "tech"]
-  },
-  "career7": {
-    "title": "Data Analyst",
-    "skills": ["Python", "Excel", "Data Analysis"],
-    "education": ["science", "commerce", "bca"],
-    "keywords": ["analytics", "statistics", "business"]
-  },
-  "career8": {
-    "title": "Electrician Technician",
-    "skills": ["Electrical Repair", "Wiring", "Safety Knowledge"],
-    "education": ["vocational"],
-    "keywords": ["hands-on", "technical", "repair"]
-  },
-  "career9": {
-    "title": "HR Manager",
-    "skills": ["Communication", "People Management", "Recruitment"],
-    "education": ["commerce", "marketing"],
-    "keywords": ["team", "management", "hr"]
-  },
-  "career10": {
+  "career5": {
     "title": "Interior Designer",
-    "skills": ["Creativity", "Sketching", "3D Tools"],
+    "skills": ["Sketching", "Illustration", "Video Editing"],
     "education": ["arts"],
-    "keywords": ["space", "decor", "design"]
+    "keywords": ["design", "interiors", "creativity"]
   }
 }
