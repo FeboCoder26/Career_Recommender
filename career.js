@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const skillsMap = {
     science: ["Python", "Data Analysis", "Mathematics", "Problem Solving"],
     commerce: ["Accounting", "Financial Analysis", "Excel", "Taxation"],
-    marketing: ["SEO", "Social-Media", "Copy-writing", "Digital Ads"],
+    marketing: ["SEO", "Social Media", "Copywriting", "Digital Ads"],
     humanities: ["Writing", "Public Speaking", "Research", "Critical Thinking"],
     arts: ["Sketching", "Illustration", "Photography", "Video Editing"],
     vocational: ["Electrical Repair", "Carpentry", "Plumbing", "Automotive"],
@@ -14,19 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const eduSelect = document.getElementById("education");
   const skillsBox = document.getElementById("skillsBox");
 
-  // Populate skills dynamically when stream is selected
+  // Populate skills dynamically when a stream is selected
   eduSelect.addEventListener("change", () => {
     const stream = eduSelect.value;
     skillsBox.innerHTML = "";
 
     if (skillsMap[stream]) {
       skillsMap[stream].forEach(skill => {
-        const id = `skill-${skill.replace(/\s+/g, "-")}`;
+        const id = `skill-${skill.replace(/\s+/g, "-").toLowerCase()}`;
         skillsBox.insertAdjacentHTML(
           "beforeend",
-          `<label for="${id}">
+          `<label for="${id}" style="display:inline-block; margin:5px 10px;">
             <input type="checkbox" id="${id}" value="${skill}"> ${skill}
-          </label><br>`
+          </label>`
         );
       });
     }
@@ -46,26 +46,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!education || selectedSkills.length === 0) {
       document.getElementById("results").innerHTML = `
-        <p>Please select a stream and at least one skill.</p>`;
+        <p style="color:red;">Please select a stream and at least one skill.</p>`;
       document.getElementById("results").style.display = "block";
       return;
     }
 
-    // Load the JSON file
-    const careers = await fetch("careerData.json").then(res => res.json());
+    try {
+      const careers = await fetch("careerData.json").then(res => res.json());
 
-    const matched = Object.values(careers)
-      .map(career => {
-        const skillMatch = career.skills.filter(skill => selectedSkills.includes(skill));
-        const eduMatch = career.education.includes(education);
-        const interestMatch = career.keywords.some(kw => interests.includes(kw));
-        const score = skillMatch.length * 40 + (eduMatch ? 30 : 0) + (interestMatch ? 30 : 0);
-        return { ...career, score };
-      })
-      .filter(c => c.score > 0)
-      .sort((a, b) => b.score - a.score);
+      const matched = Object.values(careers)
+        .map(career => {
+          const skillMatch = career.skills.filter(skill => selectedSkills.includes(skill));
+          const eduMatch = career.education.includes(education);
+          const interestMatch = career.keywords.some(kw => interests.includes(kw));
+          const score = skillMatch.length * 40 + (eduMatch ? 30 : 0) + (interestMatch ? 30 : 0);
+          return { ...career, score };
+        })
+        .filter(c => c.score > 0)
+        .sort((a, b) => b.score - a.score);
 
-    showResults(matched, name);
+      showResults(matched, name);
+    } catch (err) {
+      document.getElementById("results").innerHTML = `
+        <p style="color:red;">Error loading career data. Please check your JSON file or file path.</p>`;
+      document.getElementById("results").style.display = "block";
+    }
   });
 
   function showResults(list, userName) {
