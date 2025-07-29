@@ -1,13 +1,9 @@
 
-/*  Career‑Recommender : 2025‑07‑29  */
 document.addEventListener("DOMContentLoaded", () => {
-  /* ─────────────────────────────────────────────
-     1.  Skill‑library mapped to every stream
-  ───────────────────────────────────────────── */
   const skillsMap = {
     science: ["Python", "Data Analysis", "Mathematics", "Problem Solving"],
     commerce: ["Accounting", "Financial Analysis", "Excel", "Taxation"],
-    marketing: ["SEO", "Social‑Media", "Copy‑writing", "Digital Ads"],
+    marketing: ["SEO", "Social Media", "Copywriting", "Digital Ads"],
     humanities: ["Writing", "Public Speaking", "Research", "Critical Thinking"],
     arts: ["Sketching", "Illustration", "Photography", "Video Editing"],
     vocational: ["Electrical Repair", "Carpentry", "Plumbing", "Automotive"],
@@ -15,15 +11,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btech: ["C/C++", "Java", "DSA", "Cloud Fundamentals"]
   };
 
-  /* ─────────────────────────────────────────────
-     2.  Populate skill check‑boxes dynamically
-  ───────────────────────────────────────────── */
   const eduSelect = document.getElementById("education");
   const skillsBox  = document.getElementById("skillsBox");
 
   eduSelect.addEventListener("change", () => {
     const stream = eduSelect.value;
-    skillsBox.innerHTML = "";                    // clear previous
+    skillsBox.innerHTML = "";
     if (!stream || !skillsMap[stream]) return;
 
     skillsMap[stream].forEach(skill => {
@@ -32,62 +25,45 @@ document.addEventListener("DOMContentLoaded", () => {
         "beforeend",
         `<label for="${id}">
            <input type="checkbox" id="${id}" value="${skill}"> ${skill}
-         </label> `
+         </label>`
       );
     });
   });
 
-  /* ─────────────────────────────────────────────
-     3.  Handle form submission
-  ───────────────────────────────────────────── */
-  document
-    .getElementById("careerForm")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
+  document.getElementById("careerForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("name").value.trim() || "Candidate";
+    const education = eduSelect.value;
+    const interests = document.getElementById("interests").value.toLowerCase();
+    const skills = [...document.querySelectorAll("#skillsBox input:checked")].map(cb => cb.value);
 
-      /* Gather user input */
-      const name       = document.getElementById("name").value.trim() || "Candidate";
-      const education  = eduSelect.value;
-     const interests = document.getElementById("interests").value.toLowerCase();
-      const skills     = [...document.querySelectorAll("#skillsBox input:checked")]
-                         .map(cb => cb.value);
+    const careers = await fetch("careerData.json").then(r => r.json());
 
-      /* Load career data (same JSON you already use) */
-      const careers = await fetch("careerData.json").then(r => r.json());
+    const matches = Object.values(careers)
+      .map(c => {
+        const hitSkills = c.skills.filter(s => skills.includes(s));
+        const hitEdu = c.education.includes(education);
+        const hitKw = c.keywords.some(kw => interests.includes(kw.toLowerCase()));
 
-      /* Very simple matching logic — keep yours or improve later */
-      const matches = Object.values(careers)
-        .map(c => {
-          const hitSkills = c.skills.filter(s => skills.includes(s));
-          const hitEdu    = c.education.includes(education);
-          const hitKw = c.keywords.some(kw => interests.includes(kw.toLowerCase()));
+        const score = (hitSkills.length * 40) + (hitEdu ? 30 : 0) + (hitKw ? 30 : 0);
+        return { ...c, score };
+      })
+      .filter(c => c.score > 0)
+      .sort((a, b) => b.score - a.score);
 
-          const score     = (hitSkills.length * 40) +
-                            (hitEdu ? 30 : 0) +
-                            (hitKw  ? 30 : 0);
-          return { ...c, score };
-        })
-        .filter(c => c.score > 0)               // toss out zero‑matches
-        .sort((a, b) => b.score - a.score);
+    showResults(matches, name);
+  });
 
-      showResults(matches, name);
-    });
-
-  /* ─────────────────────────────────────────────
-     4.  Render results with an “Accuracy %” column
-  ───────────────────────────────────────────── */
   function showResults(list, userName) {
     const box = document.getElementById("results");
     box.style.display = "block";
 
     if (list.length === 0) {
-      box.innerHTML = `<h3>No suitable match found</h3>
-        <p>Try selecting a few more skills or keywords.</p>`;
+      box.innerHTML = `<h3>No suitable match found</h3><p>Try selecting more skills or refining your interests.</p>`;
       return;
     }
 
-    let html = `
-      <h3>Hi ${userName}! Top career suggestions</h3>
+    let html = `<h3>Hi ${userName}! Top career suggestions</h3>
       <table style="width:100%;border-collapse:collapse">
         <thead>
           <tr>
@@ -95,11 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <th style="text-align:left">Key Skills</th>
             <th style="text-align:right">Accuracy&nbsp;(%)</th>
           </tr>
-        </thead>
-        <tbody>`;
+        </thead><tbody>`;
 
     list.slice(0, 5).forEach(c => {
-      const accuracy = Math.round((c.score / 100) * 100);  // 0–100 %
+      const accuracy = Math.round((c.score / 100) * 100);
       html += `
         <tr>
           <td>${c.title}</td>
@@ -108,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
         </tr>`;
     });
 
-    html += `</tbody></table>`;
+    html += "</tbody></table>";
     box.innerHTML = html;
   }
 });
